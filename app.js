@@ -7,9 +7,10 @@ const router = express.Router();
 const app = express();
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
+  host: PROCESS.ENV.HOST,
+  user: PROCESS.ENV.USER,
+  password: PROCESS.ENV.PASSWORD,
+  database: PROCESS.ENV.DATABASE,
 });
 
 db.connect((err) => {
