@@ -3,14 +3,15 @@ const mysql = require("mysql");
 const multer = require("multer");
 const fs = require("fs");
 const { uuid } = require('uuidv4');
+require('dotenv').config()
 const router = express.Router();
 const app = express();
 
 const db = mysql.createConnection({
-  host: PROCESS.ENV.HOST,
-  user: PROCESS.ENV.USER,
-  password: PROCESS.ENV.PASSWORD,
-  database: PROCESS.ENV.DATABASE,
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
 });
 
 db.connect((err) => {
@@ -54,7 +55,7 @@ const upload = multer({
 
 router.post("/", upload.single("image"), (req, res, next) => {
   let post = { image: req.file.path };
-  let sql = "INSERT INTO vdreamrp.images SET ?";
+  let sql = "INSERT INTO images SET ?";
   let query = db.query(sql, post, (err, result) => {});
   res.send("https://api.vdream-rp.com/" + req.file.path);
 });
